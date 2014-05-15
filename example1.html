@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Promises - Webmontag 12.05.2014</title>
+  <link rel="stylesheet" type="text/css" href="assets/bootstrap/dist/css/bootstrap.min.css">
+</head>
+  <body>
+    <article class="container">
+      <h1 id="title"></h1>
+    </article>
+
+    <script src="assets/js/spin.min.js"></script>
+    <script src="assets/js/jquery-1.10.1.min.js"></script>
+    <script>
+      jQuery(function ($) {
+        "use strict";
+        $.ajax({
+          url: 'http://127.0.0.1/webmontag/helloWorld.txt',
+          dataType: 'html',
+          success: function (data) {
+            $('#title').text(data);
+          },
+          error: function (xhr, textStatus) {
+            $.ajax({
+              url: 'http://127.0.0.1:8080/webmontag/helloWorld.txt',
+              dataType: 'html',
+              success: function (data) {
+                $('#title').text(data);
+              },
+              error: function (xhr, textStatus) {
+                $.ajax({
+                  url: 'http://127.0.0.1:8081/webmontag/helloWorld.txt',
+                  dataType: 'html',
+                  success: function (data) {
+                    $('#title').text(data);
+                  },
+                  error: function (xhr, textStatus) {
+                    console.log("Fail hard");
+                    debugger;
+                  }
+                });
+              }
+            });
+          }
+        });
+      })
+    </script>
+  </body>
+</html>
